@@ -69,9 +69,12 @@
           const data = await response.json();
           num.value = `#${data.id.toString().padStart(3, "0")}`;
           name.value = data.name;
-          sprite.value = data.sprites.front_default;
+          sprite.value =   sprite.value = data.sprites.other["dream_world"].front_default 
+          || data.sprites.other["official-artwork"].front_default
+          || data.sprites.front_default;;
           types.value = data.types.map(t => t.type.name); //map to get array of type names
-          heightWidth.value = `Ht ${data.height}m · Wt ${data.weight}kg`;
+          heightWidth.value = `Ht ${(data.height / 10).toFixed(1)}m · Wt ${(data.weight / 10).toFixed(1)}kg`;
+
 
 
           isShown.value = true;
@@ -88,7 +91,8 @@
         sprite,
         searchInput,
         search,
-        types
+        types,
+        heightWidth
       };
     }
   }).mount('.pokedex');
